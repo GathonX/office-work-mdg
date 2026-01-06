@@ -1,12 +1,12 @@
 
-parcours of devlopment : 
+parcours of devlopment : Office work mdg
 On utilise le bakend comme apiRest comme ça notre backend serai utilisable pour plusieur application (mobile , web ,etc...), utilise la même backend
 On va transformer notre backend actuelle pour qu'il devientne un ApiRest et après il faut qu'il lié à notre frontend pour qu'ils fonctionnent ensemble 
 
 
 Stucture de mon projet 
-cd /chemin/vers/Office-mdg
-Office-mdg/
+cd /chemin/vers/office-work-mdg
+office-work-mdg/
     |_backend 
     |_frontend
 
