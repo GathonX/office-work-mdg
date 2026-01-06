@@ -112,10 +112,6 @@ frontend/Dockerfile
 # ========================================
 # 📖 DOCUMENTATION - DÉVELOPPEMENT UNIQUEMENT
 # ========================================
-
-# Dossier de documentation complète (développement local)
-docs/
-
 # Documentation de développement (ignorer uniquement certains fichiers)
 # ⚠️ Les fichiers de plan de déploiement restent versionnés
 CORRECTION_*.md
