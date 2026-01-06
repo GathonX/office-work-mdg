@@ -5,8 +5,8 @@ On va transformer notre backend actuelle pour qu'il devientne un ApiRest et apr√
 
 
 Stucture de mon projet 
-cd /chemin/vers/office-work-mdg
-office-work-mdg/
+cd /chemin/vers/dev-folio
+dev-folio/
     |_backend 
     |_frontend
 
