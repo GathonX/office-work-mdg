@@ -1,0 +1,21 @@
+
+parcours of devlopment : 
+On utilise le bakend comme apiRest comme ça notre backend serai utilisable pour plusieur application (mobile , web ,etc...), utilise la même backend
+On va transformer notre backend actuelle pour qu'il devientne un ApiRest et après il faut qu'il lié à notre frontend pour qu'ils fonctionnent ensemble 
+
+
+Stucture de mon projet 
+cd /chemin/vers/Office-mdg
+Office-mdg/
+    |_backend 
+    |_frontend
+
+
+
+cd backend 
+cd frontend
+
+
+Donc on va prendre les pages et les fichiers qui sont déjà exister dans backend/resources/ , on va les prendre tout et mettre dans frontend comme ça on a pas besoin de créer des nouveau fichier car on  , on va le convertiser en reactjs qui nous utile comm
+
+==========================================

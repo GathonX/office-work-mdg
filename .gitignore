@@ -1,0 +1,352 @@
+# ========================================
+# 🚀 PIXEL RISE - GITIGNORE OPTIMISÉ DÉPLOIEMENT
+# Fichiers exclus: développement local uniquement
+# ========================================
+
+# ========================================
+# 📦 NODE.JS / REACT / VITE
+# ========================================
+
+# Dépendances
+frontend/node_modules/
+node_modules/
+
+# Cache et build
+frontend/.vite/
+frontend/dist/
+frontend/build/
+frontend/.cache/
+frontend/.turbo/
+
+# ⚠️ FICHIERS ENVIRONNEMENT SERVEUR (ignorés pour éviter écrasement)
+frontend/.env
+frontend/vite.config.ts
+
+# ✅ AUTORISÉ : Fichiers .production (templates pour serveurs)
+!frontend/.env.production
+!frontend/vite.config.production.ts
+
+# Fichiers locaux uniquement
+frontend/.env.local
+frontend/.env.development
+frontend/.env.staging
+
+# Package Microsoft
+packages.microsoft.gpg
+
+# Environnement local
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Fichiers systèmes
+frontend/.DS_Store
+frontend/Thumbs.db
+
+# ========================================
+# 🐘 LARAVEL / PHP
+# ========================================
+
+# Dépendances Composer
+backend/vendor/
+
+# Environnement et configuration actifs (propres à chaque serveur)
+backend/.env
+.env
+
+# ✅ AUTORISÉ : Fichiers .env TEMPLATES (à copier sur chaque serveur)
+!.env.production
+!.env.staging
+!.env.local.example
+!backend/.env.production
+!backend/.env.staging
+!backend/.env.local.example
+
+# Storage et cache
+backend/storage/*.key
+backend/storage/app/public
+backend/storage/debugbar
+backend/storage/framework/*
+!backend/storage/framework/.gitignore
+backend/storage/logs/*
+!backend/storage/logs/.gitignore
+backend/public/storage
+backend/bootstrap/cache/*
+!backend/bootstrap/cache/.gitignore
+
+# Fichiers temporaires Laravel
+backend/,
+backend/-
+backend/*,
+backend/*.tmp
+backend/temp_*
+
+# Base de données locale
+backend/database/database.sqlite
+backend/database/backups/*.sql
+
+# ========================================
+# 🐳 DOCKER - CONFIGURATION SERVEUR
+# ========================================
+
+# ⚠️ FICHIERS ACTIFS SERVEUR : Ignorés pour éviter écrasement lors des pull
+docker-compose.yml
+docker-compose.override.yml
+backend/Dockerfile
+frontend/Dockerfile
+.dockerignore
+
+# ✅ AUTORISÉ : Fichiers TEMPLATES (à copier sur chaque serveur)
+!docker-compose.blue.yml
+!docker-compose.green.yml
+!docker-compose.shared.yml
+!docker-compose.production.yml
+!docker-compose.staging.yml
+!docker-compose.local.yml
+!backend/Dockerfile.production
+!backend/Dockerfile.staging
+!frontend/Dockerfile.production
+!frontend/Dockerfile.staging
+
+# ========================================
+# 📖 DOCUMENTATION - DÉVELOPPEMENT UNIQUEMENT
+# ========================================
+
+# Dossier de documentation complète (développement local)
+docs/
+
+# Documentation de développement (ignorer uniquement certains fichiers)
+# ⚠️ Les fichiers de plan de déploiement restent versionnés
+CORRECTION_*.md
+FLUX_*.md
+BUSINESS_PLAN_*.md
+DOCKER_*.md
+
+# Fichiers d'exemples et guides
+*.exemple.*
+*.example.*
+env.exemple.md
+Dockerfile.exemple.md
+
+# ========================================
+# 🧪 TESTS ET DÉVELOPPEMENT
+# ========================================
+
+# Scripts de développement local uniquement (les scripts de déploiement serveur restent)
+# ⚠️ Les scripts/ seront créés sur le serveur, pas versionnés ici
+*-dev.*
+*-test.*
+*-local.*
+
+# Fichiers de test
+*.test.*
+*.spec.*
+test-*
+tests-*
+
+# Coverage et rapports
+coverage/
+.nyc_output/
+.coverage
+htmlcov/
+
+# ========================================
+# 🔒 PROTECTION DES PORTS (DÉVELOPPEMENT LOCAL)
+# ========================================
+
+# Tout le répertoire scripts/ (développement local uniquement)
+scripts/
+
+# ========================================
+# 🧠 IDE / OUTILS DÉVELOPPEMENT
+# ========================================
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+.fleet/
+*.swp
+*.swo
+
+# Outils de développement
+.eslintcache
+.stylelintcache
+.sass-cache/
+.parcel-cache/
+
+# ========================================
+# 📱 SYSTÈME D'EXPLOITATION
+# ========================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ========================================
+# 📝 LOGS ET TEMPORAIRES
+# ========================================
+
+# Logs
+*.log
+*.pid
+*.seed
+*.bak
+*.backup
+*.tmp
+logs/
+log/
+
+# Fichiers temporaires
+temp/
+tmp/
+output.txt
+debug.log
+
+# ========================================
+# 🔐 SÉCURITÉ ET CLÉS
+# ========================================
+
+# Clés et certificats
+*.key
+*.pem
+*.cert
+*.crt
+*.p12
+*.pfx
+
+# Secrets
+.secrets
+secrets/
+private/
+
+# ========================================
+# 📊 MONITORING ET PROFILING
+# ========================================
+
+# Profiling
+*.prof
+*.trace
+.pprof/
+
+# APM et monitoring local
+newrelic.ini
+.newrelic.yml
+
+# ========================================
+# 🔄 CONTRÔLE DE VERSION
+# ========================================
+
+# Git
+*.orig
+*.rej
+.git-rewrite/
+.mailmap
+
+# Autres VCS
+.svn/
+.hg/
+.bzr/
+
+# ========================================
+# 🏗️ BUILD ET DÉPLOIEMENT LOCAL
+# ========================================
+
+# Artefacts de build local
+build/
+dist/
+out/
+
+# Déploiement local
+deploy/
+deployment/
+*.deploy.*
+
+# ========================================
+# 🌐 DÉVELOPPEMENT RÉSEAU
+# ========================================
+
+# Proxies et tunnels locaux
+.localproxy
+ngrok.exe
+*.ngrok
+
+# ========================================
+# 📦 GESTIONNAIRES DE PAQUETS
+# ========================================
+
+# NPM
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+.yarn-integrity
+
+# Composer
+composer.phar
+composer.lock.bak
+
+# ========================================
+# 🔧 OUTILS DE DÉVELOPPEMENT SPÉCIFIQUES
+# ========================================
+
+# Storybook
+.storybook/
+storybook-static/
+
+# Next.js
+.next/
+out/
+
+# Nuxt.js
+.nuxt/
+
+# Gatsby
+.cache/
+public/
+
+# ========================================
+# 💾 BASE DE DONNÉES LOCALE
+# ========================================
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# MySQL dumps
+*.sql
+*.dump
+
+# ========================================
+# 📱 APPLICATIONS MOBILES
+# ========================================
+
+# React Native
+ios/
+android/
+
+# Expo
+.expo/
+
+# ========================================
+# FIN DU GITIGNORE
+# ========================================
