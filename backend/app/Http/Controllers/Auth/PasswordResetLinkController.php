@@ -23,7 +23,7 @@ class PasswordResetLinkController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'email' => ['required', 'email'],
@@ -35,6 +35,16 @@ class PasswordResetLinkController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
+
+        if ($request->expectsJson()) {
+            if ($status == Password::RESET_LINK_SENT) {
+                return response()->json(['message' => __($status)]);
+            }
+            return response()->json([
+                'message' => __($status),
+                'errors' => ['email' => [__($status)]],
+            ], 422);
+        }
 
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))

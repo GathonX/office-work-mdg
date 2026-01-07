@@ -27,7 +27,7 @@ Plateforme SaaS permettant aux développeurs de créer, personnaliser et héberg
 ### 2.1 Structure du projet
 ```
 office-work-mdg/
-├── backend/     # Laravel 12 API REST
+├── backend/     # Laravel 12 API REST (SPA indépendante)
 └── frontend/    # React + TypeScript + Vite
 ```
 
@@ -37,12 +37,12 @@ office-work-mdg/
 - Laravel 12
 - MySQL 8+
 - Laravel Sanctum (authentification API)
-- Stripe API (paiements)
+- Orange Money API (paiements)
 - GitHub API (import repos)
 - Queue Laravel (jobs asynchrones)
 
 **Frontend**
-- React 18
+- React 18 (SPA indépendante)
 - TypeScript
 - Vite
 - Tailwind CSS
@@ -246,7 +246,7 @@ office-work-mdg/
 - Appareils utilisés
 - Pas de cookies tiers (RGPD compliant)
 
-### 3.8 Abonnements & Paiements
+### 3.8 Abonnements & Paiements (Orange Money)
 
 #### 3.8.1 Plan Gratuit
 - 1 portfolio actif
@@ -255,7 +255,7 @@ office-work-mdg/
 - Sous-domaine devfolio.io
 - Branding "Powered by DevFolio"
 
-#### 3.8.2 Plan Premium (8€/mois ou 80€/an)
+#### 3.8.2 Plan Premium (2000 Ar/mois ou 20000 Ar/an)
 - Portfolios illimités
 - Projets illimités
 - Tous templates (8+)
@@ -266,14 +266,16 @@ office-work-mdg/
 - Pas de branding
 - Support prioritaire
 
-#### 3.8.3 Gestion paiements
-- Stripe Checkout
-- Cartes bancaires acceptées
+#### 3.8.3 Gestion paiements Orange Money
+- Intégration Orange Money API
+- Paiement mobile money uniquement
 - Abonnement mensuel/annuel
 - Annulation à tout moment
 - Remboursement 14 jours
-- Factures automatiques par email
-- Gestion via portail client Stripe
+- Reçu de paiement automatique par email
+- Numéro Orange Money requis pour paiement
+- Validation manuelle paiement (webhook Orange Money)
+- Historique paiements dans compte utilisateur
 
 ---
 
@@ -381,12 +383,13 @@ DELETE /api/domains/{id}           - Supprimer domaine
 POST   /api/domains/{id}/verify    - Vérifier configuration DNS
 ```
 
-### 5.8 Abonnements
+### 5.8 Abonnements (Orange Money)
 ```
 GET    /api/subscription           - Détails abonnement actuel
-POST   /api/subscription/checkout  - Créer session Stripe
-POST   /api/subscription/portal    - Portail client Stripe
-POST   /api/subscription/webhook   - Webhook Stripe
+POST   /api/subscription/checkout  - Initier paiement Orange Money
+POST   /api/subscription/webhook   - Webhook Orange Money
+GET    /api/subscription/history   - Historique paiements
+POST   /api/subscription/cancel    - Annuler abonnement
 ```
 
 ### 5.9 Analytics (Premium)
@@ -424,30 +427,87 @@ GET    /api/portfolios/{id}/analytics - Stats portfolio
 
 ---
 
-## 7. Livrables
+## 7. Base de Données
 
-### 7.1 Code source
+### 7.1 Tables principales
+
+**users**
+- id, name, email, username, password, avatar, title, bio, location
+- github_id, github_token, github_username
+- orange_money_number (nouveau)
+- subscription_plan, subscription_ends_at
+- email_verified_at, created_at, updated_at
+
+**templates**
+- id, name, slug, description, thumbnail, preview_url
+- category, is_premium, price
+- html_structure, css_styles, config_json
+- created_at, updated_at
+
+**portfolios**
+- id, user_id, template_id, title, slug
+- subdomain, custom_domain, is_published
+- content_json, seo_title, seo_description
+- theme_config, analytics_enabled
+- created_at, updated_at
+
+**projects**
+- id, portfolio_id, title, description
+- technologies (JSON), github_url, demo_url
+- images (JSON), is_featured, order, source
+- created_at, updated_at
+
+**subscriptions**
+- id, user_id, orange_money_transaction_id
+- plan_type (monthly/yearly), status
+- amount, orange_money_number
+- trial_ends_at, ends_at
+- created_at, updated_at
+
+**payments** (nouveau pour Orange Money)
+- id, user_id, subscription_id
+- amount, currency (MGA - Ariary)
+- orange_money_number, orange_money_transaction_id
+- status (pending/completed/failed)
+- payment_date, created_at
+
+**domains**
+- id, user_id, portfolio_id, domain
+- status, verified_at
+- created_at, updated_at
+
+**analytics**
+- id, portfolio_id, visitor_ip_hash
+- page_view, device, referrer
+- visited_at
+
+---
+
+## 8. Livrables
+
+### 8.1 Code source
 - Repository Git (branches: develop, production)
 - Documentation code (comments)
 - Tests unitaires (backend)
 - Tests E2E (frontend critiques)
 
-### 7.2 Documentation
+### 8.2 Documentation
 - README.md (installation)
 - API Documentation (Swagger/OpenAPI)
 - Guide utilisateur
-- Guide admin
+- Guide Orange Money intégration
 
-### 7.3 Déploiement
+### 8.3 Déploiement
 - Backend déployé (Railway/Render)
 - Frontend déployé (Vercel)
 - Base de données configurée
 - SSL/HTTPS activé
 - Monitoring configuré
+- Orange Money API configurée
 
 ---
 
-## 8. Planning Prévisionnel
+## 9. Planning Prévisionnel
 
 **Phase 1 (Semaines 1-2) : Fondations**
 - Setup projet backend/frontend
@@ -465,7 +525,7 @@ GET    /api/portfolios/{id}/analytics - Stats portfolio
 - Domaines custom
 
 **Phase 4 (Semaine 7) : Monétisation**
-- Intégration Stripe
+- Intégration Orange Money API
 - Gestion abonnements
 - Analytics
 
@@ -477,24 +537,55 @@ GET    /api/portfolios/{id}/analytics - Stats portfolio
 
 ---
 
-## 9. Critères de Succès
+## 10. Critères de Succès
 
-### 9.1 Techniques
+### 10.1 Techniques
 - ✅ 100% endpoints API fonctionnels
 - ✅ Tests unitaires > 80% coverage
 - ✅ Performance Lighthouse > 90
 - ✅ Mobile responsive 100%
 - ✅ Zéro erreur console production
+- ✅ Orange Money paiements fonctionnels
 
-### 9.2 Business
+### 10.2 Business
 - 🎯 20+ inscriptions beta (semaine 1)
 - 🎯 10% conversion gratuit → payant
 - 🎯 200 utilisateurs payants (mois 6)
 - 🎯 Taux churn < 10% mensuel
-- 🎯 1600€+ MRR (mois 6)
+- 🎯 400 000 Ar+ MRR (mois 6)
 
-### 9.3 UX
+### 10.3 UX
 - ✅ Création portfolio < 10 minutes
 - ✅ Satisfaction utilisateur > 4/5
 - ✅ Support < 24h réponse
 - ✅ Uptime > 99.5%
+- ✅ Paiement Orange Money < 2 minutes
+
+---
+
+## 11. Notes importantes
+
+### 11.1 Paiement Orange Money uniquement
+- **Pas de Stripe** pour la V1
+- **Pas de carte bancaire** pour la V1
+- Uniquement Orange Money Madagascar
+- Prix en Ariary (MGA)
+- Validation manuelle paiements si nécessaire
+- Interface simple pour numéro Orange Money
+
+### 11.2 Version 2 (futur)
+- Ajout Stripe (carte bancaire)
+- Ajout MVola
+- Ajout Airtel Money
+- Paiement international
+- Multi-devises
+
+### 11.3 Priorités V1
+1. Auth fonctionnel
+2. Éditeur portfolio complet
+3. GitHub import
+4. Orange Money intégration
+5. Publication portfolios
+6. Landing page SEO
+
+**Document validé pour développement** ✅
