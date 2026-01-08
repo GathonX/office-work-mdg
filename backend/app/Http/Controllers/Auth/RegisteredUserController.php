@@ -42,16 +42,13 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
-        Auth::login($user);
-
-        if ($request->expectsJson()) {
+        // Do NOT auto-login; require email verification and explicit login
+        if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => 'Registered',
-                'user' => $user,
+                'message' => 'verification-link-sent',
             ], 201);
         }
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect('/');
     }
 }

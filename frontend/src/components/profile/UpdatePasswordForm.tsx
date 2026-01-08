@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { get, put } from "@/lib/api";
+import { toast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
 
 const schema = z
   .object({
@@ -20,18 +23,38 @@ const schema = z
 type FormValues = z.infer<typeof schema>;
 
 export default function UpdatePasswordForm() {
+  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { current_password: "", password: "", password_confirmation: "" },
   });
 
-  const onSubmit = (values: FormValues) => {
-    console.log(values);
+  const onSubmit = async (values: FormValues) => {
+    setError(null);
+    setStatus(null);
+    try {
+      await get("/sanctum/csrf-cookie");
+      const res = await put("/api/password", values);
+      if (!res.ok) {
+        const msg = (res.data as any)?.message || "Password update failed";
+        setError(msg);
+        toast({ variant: "destructive", title: "Erreur", description: msg });
+        return;
+      }
+      setStatus("Password updated.");
+      toast({ title: "Succès", description: "Mot de passe mis à jour." });
+      form.reset({ current_password: "", password: "", password_confirmation: "" });
+    } catch {
+      setError("Network error");
+      toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
+    }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        
         <FormField
           control={form.control}
           name="current_password"
@@ -72,7 +95,12 @@ export default function UpdatePasswordForm() {
           )}
         />
         <div className="flex items-center gap-2">
-          <Button type="submit">Save</Button>
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            {form.formState.isSubmitting ? "Saving..." : "Save"}
+          </Button>
         </div>
       </form>
     </Form>

@@ -8,27 +8,27 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 220 13% 18%;
+    --background: 0 0% 100%;
+    --foreground: 216 100% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 13% 18%;
+    --card-foreground: 216 100% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 18%;
+    --popover-foreground: 216 100% 10%;
 
-    --primary: 21 90% 48%;
+    --primary: 216 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 21 90% 44%;
+    --primary-hover: 216 100% 45%;
 
-    --secondary: 210 17% 96%;
-    --secondary-foreground: 220 13% 18%;
+    --secondary: 216 100% 96%;
+    --secondary-foreground: 216 100% 10%;
 
-    --muted: 210 17% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 216 100% 96%;
+    --muted-foreground: 220 9% 40%;
 
-    --accent: 37 91% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 216 100% 80%;
+    --accent-foreground: 216 100% 10%;
 
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
@@ -36,21 +36,22 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 21 90% 48%;
+    --border: 216 100% 91%;
+    --input: 216 100% 91%;
+    --ring: 216 100% 50%;
+    --brand-black: 0 0% 0%;
 
-    /* Marketplace specific colors */
-    --marketplace-orange: 21 90% 48%;
-    --marketplace-blue: 213 94% 68%;
-    --marketplace-green: 142 76% 36%;
-    --marketplace-yellow: 45 93% 47%;
-    --marketplace-gray: 220 9% 96%;
+    /* DevFolio specific colors */
+    --devfolio-orange: 21 90% 48%;
+    --devfolio-blue: 213 94% 68%;
+    --devfolio-green: 142 76% 36%;
+    --devfolio-yellow: 45 93% 47%;
+    --devfolio-gray: 220 9% 96%;
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(21 90% 48%), hsl(37 91% 55%));
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 17% 98%));
-    --gradient-hero: linear-gradient(135deg, hsl(213 94% 68%), hsl(21 90% 48%));
+    --gradient-primary: linear-gradient(135deg, hsl(216 100% 50%), hsl(216 100% 80%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(216 100% 96%));
+    --gradient-hero: linear-gradient(135deg, hsl(216 100% 80%), hsl(216 100% 50%));
     
     /* Shadows */
     --shadow-card: 0 2px 8px hsl(220 13% 18% / 0.08);
@@ -77,26 +78,26 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 220 13% 8%;
-    --foreground: 210 40% 98%;
+    --background: 216 100% 8%;
+    --foreground: 0 0% 100%;
 
-    --card: 220 13% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 216 100% 12%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 220 13% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 216 100% 12%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 21 90% 48%;
+    --primary: 216 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 21 90% 52%;
+    --primary-hover: 216 100% 45%;
 
-    --secondary: 220 13% 15%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 216 40% 20%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 13% 15%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 216 40% 20%;
+    --muted-foreground: 215 20% 70%;
 
-    --accent: 37 91% 55%;
+    --accent: 216 100% 60%;
     --accent-foreground: 0 0% 100%;
 
     --success: 142 76% 36%;
@@ -105,26 +106,26 @@ All colors MUST be HSL.
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 18%;
-    --input: 220 13% 18%;
-    --ring: 21 90% 48%;
+    --border: 216 40% 25%;
+    --input: 216 40% 25%;
+    --ring: 216 100% 50%;
 
-    /* Marketplace specific colors - dark mode */
-    --marketplace-orange: 21 90% 52%;
-    --marketplace-blue: 213 94% 72%;
-    --marketplace-green: 142 76% 40%;
-    --marketplace-yellow: 45 93% 52%;
-    --marketplace-gray: 220 13% 18%;
+    /* DevFolio specific colors - dark mode */
+    --devfolio-orange: 21 90% 52%;
+    --devfolio-blue: 213 94% 72%;
+    --devfolio-green: 142 76% 40%;
+    --devfolio-yellow: 45 93% 52%;
+    --devfolio-gray: 220 13% 18%;
     
     /* Gradients - dark mode */
-    --gradient-primary: linear-gradient(135deg, hsl(21 90% 52%), hsl(37 91% 60%));
-    --gradient-card: linear-gradient(180deg, hsl(220 13% 11%), hsl(220 13% 9%));
-    --gradient-hero: linear-gradient(135deg, hsl(213 94% 72%), hsl(21 90% 52%));
+    --gradient-primary: linear-gradient(135deg, hsl(216 100% 60%), hsl(216 100% 50%));
+    --gradient-card: linear-gradient(180deg, hsl(216 100% 12%), hsl(216 100% 10%));
+    --gradient-hero: linear-gradient(135deg, hsl(216 100% 60%), hsl(216 100% 50%));
     
     /* Shadows - dark mode */
     --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
     --shadow-card-hover: 0 4px 16px hsl(0 0% 0% / 0.4);
-    --shadow-button: 0 2px 4px hsl(21 90% 52% / 0.3);
+    --shadow-button: 0 2px 4px hsl(216 100% 50% / 0.3);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

@@ -40,6 +40,12 @@ class PasswordResetLinkController extends Controller
             if ($status == Password::RESET_LINK_SENT) {
                 return response()->json(['message' => __($status)]);
             }
+            if ($status == Password::RESET_THROTTLED) {
+                return response()->json([
+                    'message' => __($status),
+                    'status' => 'throttled',
+                ]);
+            }
             return response()->json([
                 'message' => __($status),
                 'errors' => ['email' => [__($status)]],

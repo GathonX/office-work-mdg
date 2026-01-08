@@ -14,6 +14,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { get, del } from "@/lib/api";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
 
 const schema = z.object({
   password: z.string().min(6),
@@ -27,10 +32,32 @@ export default function DeleteUserForm() {
     defaultValues: { password: "" },
   });
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const [status, setStatus] = React.useState<string | null>(null);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
-  const onSubmit = (values: FormValues) => {
-    console.log("delete account with:", values);
-    setOpen(false);
+  const onSubmit = async (values: FormValues) => {
+    setError(null);
+    setStatus(null);
+    try {
+      await get("/sanctum/csrf-cookie");
+      const res = await del("/api/user", { password: values.password });
+      if (!res.ok) {
+        const msg = (res.data as any)?.message || "Account deletion failed";
+        setError(msg);
+        toast({ variant: "destructive", title: "Erreur", description: msg });
+        return;
+      }
+      setStatus("Account deleted.");
+      toast({ title: "Compte supprimé", description: "Votre compte a été supprimé." });
+      setOpen(false);
+      logout();
+      navigate("/");
+    } catch {
+      setError("Network error");
+      toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
+    }
   };
 
   return (
@@ -65,8 +92,11 @@ export default function DeleteUserForm() {
                 <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
                   Cancel
                 </Button>
-                <Button type="submit" variant="destructive">
-                  Delete Account
+                <Button type="submit" variant="destructive" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  {form.formState.isSubmitting ? "Deleting..." : "Delete Account"}
                 </Button>
               </DialogFooter>
             </form>

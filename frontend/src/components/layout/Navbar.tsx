@@ -2,12 +2,17 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { get, post } from "@/lib/api";
 
 export default function Navbar() {
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await get("/sanctum/csrf-cookie");
+      await post("/api/logout");
+    } catch {}
     logout();
     navigate("/");
   };

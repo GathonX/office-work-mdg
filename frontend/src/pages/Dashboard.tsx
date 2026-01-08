@@ -1,11 +1,12 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import AuthedLayout from "@/components/layout/AuthedLayout";
 
 export default function Dashboard() {
   return (
-    <div className="py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="mb-6">
+    <AuthedLayout>
+      <div className="space-y-6">
+        <header className="mb-2">
           <h2 className="font-semibold text-2xl leading-tight">Dashboard</h2>
           <p className="text-sm text-muted-foreground">Tout les contenu de header sont ici</p>
         </header>
@@ -15,6 +16,6 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AuthedLayout>
   );
 }

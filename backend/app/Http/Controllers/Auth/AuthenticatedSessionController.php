@@ -26,6 +26,21 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // If the user has not verified their email, deny login
+        if (! $request->user()->hasVerifiedEmail()) {
+            \Illuminate\Support\Facades\Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'email-not-verified',
+                ], 423);
+            }
+
+            return redirect()->to('/login?verify=required');
+        }
+
         $request->session()->regenerate();
 
         if ($request->expectsJson()) {

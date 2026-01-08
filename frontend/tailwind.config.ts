@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -57,12 +58,21 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Marketplace specific colors
-				'marketplace-orange': 'hsl(var(--marketplace-orange))',
-				'marketplace-blue': 'hsl(var(--marketplace-blue))',
-				'marketplace-green': 'hsl(var(--marketplace-green))',
-				'marketplace-yellow': 'hsl(var(--marketplace-yellow))',
-				'marketplace-gray': 'hsl(var(--marketplace-gray))',
+				brand: {
+					white: '#ffffff',
+					lightBlue: '#99c2ff',
+					primaryBlue: '#0066ff',
+					deepBlue: '#003d99',
+					darkerBlue: '#002966',
+					deepestBlue: '#001433',
+					black: '#000000',
+				},
+				// DevFolio specific colors
+				'devfolio-orange': 'hsl(var(--devfolio-orange))',
+				'devfolio-blue': 'hsl(var(--devfolio-blue))',
+				'devfolio-green': 'hsl(var(--devfolio-green))',
+				'devfolio-yellow': 'hsl(var(--devfolio-yellow))',
+				'devfolio-gray': 'hsl(var(--devfolio-gray))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -113,5 +123,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [animate],
 } satisfies Config;

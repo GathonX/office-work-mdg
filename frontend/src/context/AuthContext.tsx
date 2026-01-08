@@ -29,11 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const savedUser = localStorage.getItem("auth_user");
     if (savedToken) setToken(savedToken);
     if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch {
-        setUser(null);
-      }
+      try { setUser(JSON.parse(savedUser)); } catch { setUser(null); }
     }
     // Try to restore session via Sanctum cookie
     (async () => {
@@ -42,8 +38,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (res.ok && res.data) {
           setUser(res.data as any);
           localStorage.setItem("auth_user", JSON.stringify(res.data));
+        } else {
+          setUser(null);
+          setToken(null);
+          localStorage.removeItem("auth_user");
+          localStorage.removeItem("auth_token");
         }
-      } catch {}
+      } catch {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("auth_user");
+        localStorage.removeItem("auth_token");
+      }
       setInitialized(true);
     })();
   }, []);
@@ -66,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, isAuthenticated: !!user || !!token, login, logout, setUser, initialized }}
+      value={{ user, token, isAuthenticated: !!user, login, logout, setUser, initialized }}
     >
       {children}
     </AuthContext.Provider>

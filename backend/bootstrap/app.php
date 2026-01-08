@@ -14,8 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Enable Sanctum stateful auth for SPA using cookies on API routes
         $middleware->statefulApi();
-        // Ensure CORS is handled globally according to config/cors.php
-        $middleware->appendToGlobalStack(\Illuminate\Http\Middleware\HandleCors::class);
+        // CORS is handled via the framework's default global middleware and config/cors.php
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

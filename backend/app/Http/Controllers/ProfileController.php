@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -55,7 +56,8 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        Auth::logout();
+        // Use session guard to properly logout in stateful Sanctum (cookie-based)
+        Auth::guard('web')->logout();
 
         $user->delete();
 
@@ -67,5 +69,71 @@ class ProfileController extends Controller
         }
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Upload and set the authenticated user's avatar.
+     */
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+        ]);
+
+        $user = $request->user();
+
+        // Remove previous avatar if exists
+        if (! empty($user->avatar_path)) {
+            try { Storage::disk('public')->delete($user->avatar_path); } catch (\Throwable $e) {}
+        }
+
+        $path = $request->file('avatar')->store('avatars', 'public');
+        $user->avatar_path = $path;
+        $user->save();
+
+        return response()->json([
+            'message' => 'avatar-updated',
+            'user' => $user->fresh(),
+        ]);
+    }
+
+    /**
+     * Return authenticated user's preferences (merged with defaults)
+     */
+    public function getPreferences(Request $request)
+    {
+        $defaults = [
+            'theme' => 'light',
+            'email_notifications' => true,
+            'push_notifications' => false,
+        ];
+        $prefs = $request->user()->preferences ?? [];
+        if (! is_array($prefs)) { $prefs = []; }
+        $merged = array_merge($defaults, $prefs);
+        return response()->json(['preferences' => $merged]);
+    }
+
+    /**
+     * Update authenticated user's preferences
+     */
+    public function updatePreferences(Request $request)
+    {
+        $data = $request->validate([
+            'theme' => ['sometimes', 'in:light,dark'],
+            'email_notifications' => ['sometimes', 'boolean'],
+            'push_notifications' => ['sometimes', 'boolean'],
+        ]);
+
+        $user = $request->user();
+        $prefs = $user->preferences ?? [];
+        if (! is_array($prefs)) { $prefs = []; }
+        $new = array_merge($prefs, $data);
+        $user->preferences = $new;
+        $user->save();
+
+        return response()->json([
+            'preferences' => $new,
+            'user' => $user->fresh(),
+        ]);
     }
 }

@@ -22,7 +22,7 @@ class ConfirmablePasswordController extends Controller
     /**
      * Confirm the user's password.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         if (! Auth::guard('web')->validate([
             'email' => $request->user()->email,
@@ -35,6 +35,13 @@ class ConfirmablePasswordController extends Controller
 
         $request->session()->put('auth.password_confirmed_at', time());
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if ($request->expectsJson() || $request->wantsJson()) {
+            return response()->json([
+                'message' => 'Password confirmed.',
+                'status' => 'password-confirmed',
+            ]);
+        }
+
+        return redirect()->intended('/');
     }
 }

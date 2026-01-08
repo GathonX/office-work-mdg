@@ -15,6 +15,12 @@ export function setAuthToken(token: string | null) {
 
 type FetchOptions = Omit<RequestInit, "headers"> & { extraHeaders?: Record<string, string> };
 
+function getCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([.$?*|{}()\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"));
+  return match ? match[1] : null;
+}
+
 async function request(path: string, options: FetchOptions = {}) {
   const url = path.startsWith("http") ? path : `${BASE_URL}${path}`;
   const headers: Record<string, string> = {
@@ -26,6 +32,15 @@ async function request(path: string, options: FetchOptions = {}) {
   }
   if (authToken) {
     headers["Authorization"] = `Bearer ${authToken}`;
+  }
+  // Include XSRF token for Laravel Sanctum if present
+  const xsrf = getCookie("XSRF-TOKEN");
+  if (xsrf && !("X-XSRF-TOKEN" in headers)) {
+    try {
+      headers["X-XSRF-TOKEN"] = decodeURIComponent(xsrf);
+    } catch {
+      headers["X-XSRF-TOKEN"] = xsrf;
+    }
   }
   const res = await fetch(url, {
     credentials: "include",
@@ -49,8 +64,21 @@ export async function post<T = any>(path: string, body?: any, extraHeaders?: Rec
   return parseJson<T>(res);
 }
 
-export async function del<T = any>(path: string) {
-  const res = await request(path, { method: "DELETE" });
+export async function put<T = any>(path: string, body?: any, extraHeaders?: Record<string, string>) {
+  const res = await request(path, {
+    method: "PUT",
+    body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
+    extraHeaders,
+  });
+  return parseJson<T>(res);
+}
+
+export async function del<T = any>(path: string, body?: any, extraHeaders?: Record<string, string>) {
+  const res = await request(path, {
+    method: "DELETE",
+    body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
+    extraHeaders,
+  });
   return parseJson<T>(res);
 }
 
