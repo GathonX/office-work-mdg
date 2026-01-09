@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { get, post, put } from "@/lib/api";
-import { ChevronsLeft, ChevronsRight, Code2, LayoutDashboard, User, Bell, Settings, Menu, Loader2 } from "lucide-react";
+import { ChevronsLeft, ChevronsRight, Code2, LayoutDashboard, User, Bell, Settings, Menu, Loader2, Eye, SlidersHorizontal, Repeat, LogOut } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Identicon from "@/components/ui/identicon";
@@ -94,6 +94,9 @@ export default function AuthedLayout({ children }: Props) {
 
   const name = (user as any)?.name as string | undefined;
   const email = (user as any)?.email as string | undefined;
+  const displayName = name || "Juno Mandimbizara";
+  const handle =
+    email && email.includes("@") ? `@${email.split("@")[0]}` : "@junomandimbizara";
   const initials = (name || email || "U").slice(0, 2).toUpperCase();
 
   const onLogout = async () => {
@@ -228,11 +231,7 @@ export default function AuthedLayout({ children }: Props) {
             );
           })}
         </nav>
-        {!collapsed && (
-          <div className="px-4 py-3 text-xs text-muted-foreground">
-            {user?.email || ""}
-          </div>
-        )}
+        
       </aside>
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-14 border-b border-border flex items-center justify-between px-4">
@@ -269,7 +268,7 @@ export default function AuthedLayout({ children }: Props) {
                       );
                     })}
                   </nav>
-                  <div className="px-4 py-3 text-xs text-muted-foreground border-t">{user?.email || ""}</div>
+                  
                 </SheetContent>
               </Sheet>
             </div>
@@ -335,30 +334,51 @@ export default function AuthedLayout({ children }: Props) {
                 </div>
               </PopoverContent>
             </Popover>
-            {email && (
-              <div className="hidden sm:block text-sm text-muted-foreground truncate max-w-[200px]">
-                {email}
-              </div>
-            )}
+            
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 rounded-md px-1.5 py-1 hover:bg-secondary focus:outline-none">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={(user as any)?.avatar_url || ""} alt={name || email || "User"} />
+                    <AvatarImage src={(user as any)?.avatar_url || ""} alt={name || email || "Utilisateur"} />
                     <AvatarFallback className="bg-transparent p-0">
                       <Identicon value={email || name || "user"} size={32} />
                     </AvatarFallback>
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
+              <DropdownMenuContent align="end" className="w-64 text-center">
+                <div className="px-2 py-3">
+                  <div className="flex flex-col items-center gap-2">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={(user as any)?.avatar_url || ""} alt={name || email || "Utilisateur"} />
+                      <AvatarFallback className="bg-transparent p-0">
+                        <Identicon value={email || name || "user"} size={40} />
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="truncate">
+                      <div className="text-sm font-semibold">{displayName}</div>
+                      <div className="text-xs text-muted-foreground">{handle}</div>
+                    </div>
+                  </div>
+                </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate("/dashboard")}>Tableau de bord</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/profile")}>Profil</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setPrefOpen(true)}>Préférences</DropdownMenuItem>
+                <DropdownMenuItem className="justify-center gap-2" onClick={() => navigate("/profile")}>
+                  <Eye className="h-4 w-4" />
+                  Afficher votre profile
+                </DropdownMenuItem>
+                <DropdownMenuItem className="justify-center gap-2" onClick={() => setPrefOpen(true)}>
+                  <SlidersHorizontal className="h-4 w-4" />
+                  Préférences
+                </DropdownMenuItem>
+                <DropdownMenuItem className="justify-center gap-2" onClick={() => toast({ title: "Changer de compte", description: "Fonctionnalité à venir." })}>
+                  <Repeat className="h-4 w-4" />
+                  Changer de compte
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={onLogout}>Se déconnecter</DropdownMenuItem>
+                <DropdownMenuItem className="justify-center gap-2" onClick={onLogout}>
+                  <LogOut className="h-4 w-4" />
+                  Se déconnecter
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <Sheet open={prefOpen} onOpenChange={setPrefOpen}>
@@ -371,7 +391,7 @@ export default function AuthedLayout({ children }: Props) {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium">Theme</p>
+                        <p className="text-sm font-medium">Thème</p>
                         <p className="text-xs text-muted-foreground">Basculer le mode sombre</p>
                       </div>
                       <Switch checked={theme === 'dark'} onCheckedChange={(v) => setTheme(v ? 'dark' : 'light')} />

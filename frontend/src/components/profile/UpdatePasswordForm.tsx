@@ -16,7 +16,7 @@ const schema = z
     password_confirmation: z.string().min(6),
   })
   .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
+    message: "Les mots de passe ne correspondent pas",
     path: ["password_confirmation"],
   });
 
@@ -37,16 +37,16 @@ export default function UpdatePasswordForm() {
       await get("/sanctum/csrf-cookie");
       const res = await put("/api/password", values);
       if (!res.ok) {
-        const msg = (res.data as any)?.message || "Password update failed";
+        const msg = (res.data as any)?.message || "La mise à jour du mot de passe a échoué";
         setError(msg);
         toast({ variant: "destructive", title: "Erreur", description: msg });
         return;
       }
-      setStatus("Password updated.");
+      setStatus("Mot de passe mis à jour.");
       toast({ title: "Succès", description: "Mot de passe mis à jour." });
       form.reset({ current_password: "", password: "", password_confirmation: "" });
     } catch {
-      setError("Network error");
+      setError("Erreur réseau");
       toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
     }
   };
@@ -60,7 +60,7 @@ export default function UpdatePasswordForm() {
           name="current_password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Current Password</FormLabel>
+              <FormLabel>Mot de passe actuel</FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -73,7 +73,7 @@ export default function UpdatePasswordForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel>Nouveau mot de passe</FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -86,7 +86,7 @@ export default function UpdatePasswordForm() {
           name="password_confirmation"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel>Confirmer le mot de passe</FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -99,7 +99,7 @@ export default function UpdatePasswordForm() {
             {form.formState.isSubmitting && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            {form.formState.isSubmitting ? "Saving..." : "Save"}
+            {form.formState.isSubmitting ? "Enregistrement..." : "Enregistrer"}
           </Button>
         </div>
       </form>

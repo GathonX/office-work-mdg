@@ -77,24 +77,24 @@ export default function UploadAvatarForm() {
     <div className="space-y-3">
       <div className="flex items-center gap-4">
         <Avatar className="h-16 w-16">
-          <AvatarImage src={(user as any)?.avatar_url || undefined} alt={name || email || "User"} />
+          <AvatarImage src={(user as any)?.avatar_url || undefined} alt={name || email || "Utilisateur"} />
           <AvatarFallback className="bg-transparent p-0">
             <Identicon value={email || name || "user"} size={64} />
           </AvatarFallback>
         </Avatar>
         <div className="flex items-center gap-2">
           <Input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFileChange} />
-          <Button type="button" variant="secondary" onClick={onPick}>Choose</Button>
+          <Button type="button" variant="secondary" onClick={onPick}>Choisir</Button>
           <Button type="button" onClick={onUpload} disabled={submitting}>
             {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {submitting ? "Uploading..." : "Upload"}
+            {submitting ? "Téléversement..." : "Téléverser"}
           </Button>
         </div>
       </div>
       {preview && (
         <div className="flex items-center gap-3">
-          <span className="text-xs text-muted-foreground">Preview:</span>
-          <img src={preview} alt="Preview" className="h-16 w-16 rounded-full object-cover border" />
+          <span className="text-xs text-muted-foreground">Aperçu :</span>
+          <img src={preview} alt="Aperçu" className="h-16 w-16 rounded-full object-cover border" />
         </div>
       )}
     </div>

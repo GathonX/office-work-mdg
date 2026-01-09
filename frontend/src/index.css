@@ -77,6 +77,15 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+@layer utilities {
+  /* Slow down all spinners globally */
+  .animate-spin {
+    animation: spin 1.25s linear infinite !important;
+  }
+}
+
+ 
+
   .dark {
     --background: 216 100% 8%;
     --foreground: 0 0% 100%;

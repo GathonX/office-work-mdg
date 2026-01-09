@@ -15,6 +15,7 @@ import ProfilePage from "./pages/ProfilePage";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Notifications from "./pages/Notifications";
+import AboutUser from "./pages/AboutUser";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import VerifiedRoute from "@/components/auth/VerifiedRoute";
 import { AuthProvider } from "@/context/AuthContext";
@@ -80,6 +81,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/a-propos"
+            element={
+              <ProtectedRoute>
+                <AboutUser />
               </ProtectedRoute>
             }
           />

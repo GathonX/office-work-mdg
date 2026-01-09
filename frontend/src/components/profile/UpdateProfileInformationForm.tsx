@@ -12,13 +12,13 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
 const schema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  phone: z.string().max(25).optional().or(z.literal("")),
-  address: z.string().max(255).optional().or(z.literal("")),
-  job_title: z.string().max(100).optional().or(z.literal("")),
-  location: z.string().max(150).optional().or(z.literal("")),
-  bio: z.string().max(500).optional().or(z.literal("")),
+  name: z.string().min(1, "Nom requis"),
+  email: z.string().email("E-mail invalide"),
+  phone: z.string().max(25, "25 caractères max").optional().or(z.literal("")),
+  address: z.string().max(255, "255 caractères max").optional().or(z.literal("")),
+  job_title: z.string().max(100, "100 caractères max").optional().or(z.literal("")),
+  location: z.string().max(150, "150 caractères max").optional().or(z.literal("")),
+  bio: z.string().max(500, "500 caractères max").optional().or(z.literal("")),
 });
 
 type FormValues = z.infer<typeof schema>;

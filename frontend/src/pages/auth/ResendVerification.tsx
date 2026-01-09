@@ -13,7 +13,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
 const schema = z.object({
-  email: z.string().email(),
+  email: z.string().email("E-mail invalide"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -45,15 +45,15 @@ export default function ResendVerification() {
       await get("/sanctum/csrf-cookie");
       const res = await post("/api/email/resend-verification", { email: values.email });
       if (!res.ok) {
-        const msg = (res.data as any)?.message || "Unable to resend verification email";
+        const msg = (res.data as any)?.message || "Impossible de renvoyer l'e-mail de vérification";
         setError(msg);
         toast({ variant: "destructive", title: "Erreur", description: msg });
         return;
       }
-      setStatus("Verification link sent. Please check your inbox.");
+      setStatus("Lien de vérification renvoyé. Veuillez vérifier votre boîte de réception.");
       toast({ title: "Succès", description: "Lien de vérification renvoyé." });
     } catch (e) {
-      setError("Network error");
+      setError("Erreur réseau");
       toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
     }
   };
@@ -62,11 +62,11 @@ export default function ResendVerification() {
     <AuthLayout>
       <Card>
         <CardHeader>
-          <CardTitle>Resend verification email</CardTitle>
+          <CardTitle>Renvoyer l'e-mail de vérification</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground mb-4">
-            If you didn't receive the email, enter your address and we'll send a new verification link.
+            Si vous n'avez pas reçu l'e-mail, entrez votre adresse et nous vous enverrons un nouveau lien de vérification.
           </p>
           
           <Form {...form}>
@@ -76,7 +76,7 @@ export default function ResendVerification() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>E-mail</FormLabel>
                     <FormControl>
                       <Input type="email" {...field} />
                     </FormControl>
@@ -85,12 +85,12 @@ export default function ResendVerification() {
                 )}
               />
               <div className="flex items-center justify-between">
-                <Link to="/login" className="text-sm underline">Back to login</Link>
+                <Link to="/login" className="text-sm underline">Retour à la connexion</Link>
                 <Button type="submit" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {form.formState.isSubmitting ? "Sending..." : "Resend verification link"}
+                  {form.formState.isSubmitting ? "Envoi..." : "Renvoyer le lien de vérification"}
                 </Button>
               </div>
             </form>

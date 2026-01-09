@@ -13,10 +13,10 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
 const schema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(6),
-  password_confirmation: z.string().min(6),
+  name: z.string().min(1, "Nom requis"),
+  email: z.string().email("E-mail invalide"),
+  password: z.string().min(6, "Au moins 6 caractères"),
+  password_confirmation: z.string().min(6, "Au moins 6 caractères"),
 }).refine((data) => data.password === data.password_confirmation, {
   message: "Les mots de passe ne correspondent pas",
   path: ["password_confirmation"],
@@ -38,7 +38,7 @@ export default function Register() {
       await get("/sanctum/csrf-cookie");
       const res = await post("/api/register", values);
       if (!res.ok) {
-        const msg = (res.data as any)?.message || "Registration failed";
+        const msg = (res.data as any)?.message || "Échec de l'inscription";
         setError(msg);
         toast({ variant: "destructive", title: "Erreur", description: msg });
         return;
@@ -47,7 +47,7 @@ export default function Register() {
       toast({ title: "Inscription réussie", description: "Vérifiez votre e-mail pour activer votre compte." });
       navigate(`/resend-verification?email=${encodeURIComponent(values.email)}` , { replace: true });
     } catch (e) {
-      setError("Network error");
+      setError("Erreur réseau");
       toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
     }
   };

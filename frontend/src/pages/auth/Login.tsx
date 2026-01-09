@@ -14,8 +14,8 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
+  email: z.string().email("E-mail invalide"),
+  password: z.string().min(6, "Au moins 6 caractères"),
   remember: z.boolean().optional().default(false),
 });
 
@@ -46,7 +46,7 @@ export default function Login() {
         remember: !!values.remember,
       });
       if (!res.ok) {
-        const msg = (res.data as any)?.message || "Login failed";
+        const msg = (res.data as any)?.message || "Échec de la connexion";
         setError(msg);
         toast({ variant: "destructive", title: "Erreur", description: msg });
         return;
@@ -59,11 +59,11 @@ export default function Login() {
         toast({ title: "Connexion réussie", description: "Bienvenue !" });
         navigate(dest, { replace: true });
       } else {
-        setError("Unable to fetch user after login");
+        setError("Impossible de récupérer l'utilisateur après connexion.");
         toast({ variant: "destructive", title: "Erreur", description: "Impossible de récupérer l'utilisateur après connexion." });
       }
     } catch (e) {
-      setError("Network error");
+      setError("Erreur réseau");
       toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
     }
   };

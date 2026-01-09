@@ -23,15 +23,15 @@ export default function VerifyEmail() {
       await get("/sanctum/csrf-cookie");
       const res = await post("/api/email/verification-notification");
       if (!res.ok) {
-        const msg = (res.data as any)?.message || "Unable to send verification email";
+        const msg = (res.data as any)?.message || "Impossible d'envoyer l'e-mail de vérification";
         setError(msg);
         toast({ variant: "destructive", title: "Erreur", description: msg });
         return;
       }
-      setStatus("Verification link sent.");
+      setStatus("Lien de vérification envoyé.");
       toast({ title: "Succès", description: "Lien de vérification envoyé." });
     } catch {
-      setError("Network error");
+      setError("Erreur réseau");
       toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
     } finally {
       setResending(false);
@@ -52,19 +52,19 @@ export default function VerifyEmail() {
     <AuthLayout>
       <Card>
         <CardHeader>
-          <CardTitle>Verify your email</CardTitle>
+          <CardTitle>Vérifiez votre e-mail</CardTitle>
         </CardHeader>
         <CardContent>
           
           <p className="text-sm text-muted-foreground mb-4">
-            Thanks for signing up! Please verify your email address by clicking the link we just emailed to you. If you didn't receive the email, we can send another.
+            Merci pour votre inscription ! Veuillez vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer. Si vous n'avez pas reçu l'e-mail, nous pouvons en renvoyer un.
           </p>
           <div className="flex items-center justify-between">
             <Button onClick={resend} disabled={resending}>
               {resending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {resending ? "Resending..." : "Resend Verification Email"}
+              {resending ? "Renvoi en cours..." : "Renvoyer l'e-mail de vérification"}
             </Button>
-            <Button variant="secondary" onClick={logout}>Log Out</Button>
+            <Button variant="secondary" onClick={logout}>Se déconnecter</Button>
           </div>
         </CardContent>
       </Card>

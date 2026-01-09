@@ -44,18 +44,18 @@ export default function DeleteUserForm() {
       await get("/sanctum/csrf-cookie");
       const res = await del("/api/user", { password: values.password });
       if (!res.ok) {
-        const msg = (res.data as any)?.message || "Account deletion failed";
+        const msg = (res.data as any)?.message || "Échec de la suppression du compte";
         setError(msg);
         toast({ variant: "destructive", title: "Erreur", description: msg });
         return;
       }
-      setStatus("Account deleted.");
+      setStatus("Compte supprimé.");
       toast({ title: "Compte supprimé", description: "Votre compte a été supprimé." });
       setOpen(false);
       logout();
       navigate("/");
     } catch {
-      setError("Network error");
+      setError("Erreur réseau");
       toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
     }
   };
@@ -64,13 +64,13 @@ export default function DeleteUserForm() {
     <div className="space-y-4">
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="destructive">Delete Account</Button>
+          <Button variant="destructive">Supprimer le compte</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
+            <DialogTitle>Voulez-vous vraiment supprimer votre compte ?</DialogTitle>
             <DialogDescription>
-              Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm.
+              Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Veuillez saisir votre mot de passe pour confirmer.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -80,9 +80,9 @@ export default function DeleteUserForm() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Mot de passe</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Password" {...field} />
+                      <Input type="password" placeholder="Mot de passe" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -90,13 +90,13 @@ export default function DeleteUserForm() {
               />
               <DialogFooter>
                 <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
-                  Cancel
+                  Annuler
                 </Button>
                 <Button type="submit" variant="destructive" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {form.formState.isSubmitting ? "Deleting..." : "Delete Account"}
+                  {form.formState.isSubmitting ? "Suppression..." : "Supprimer le compte"}
                 </Button>
               </DialogFooter>
             </form>

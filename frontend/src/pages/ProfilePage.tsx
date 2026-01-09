@@ -10,11 +10,11 @@ export default function ProfilePage() {
   return (
     <AuthedLayout>
       <div className="space-y-6">
-        <h2 className="font-semibold text-2xl leading-tight">Profile</h2>
+        <h2 className="font-semibold text-2xl leading-tight">Profil</h2>
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Profile Information</CardTitle>
+              <CardTitle>Informations du profil</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="mb-4">
@@ -26,7 +26,7 @@ export default function ProfilePage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Update Password</CardTitle>
+              <CardTitle>Mettre à jour le mot de passe</CardTitle>
             </CardHeader>
             <CardContent>
               <UpdatePasswordForm />
@@ -35,7 +35,7 @@ export default function ProfilePage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Delete Account</CardTitle>
+              <CardTitle>Supprimer le compte</CardTitle>
             </CardHeader>
             <CardContent>
               <DeleteUserForm />

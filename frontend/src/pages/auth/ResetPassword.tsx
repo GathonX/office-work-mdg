@@ -13,11 +13,11 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  password_confirmation: z.string().min(6),
+  email: z.string().email("E-mail invalide"),
+  password: z.string().min(6, "Au moins 6 caractères"),
+  password_confirmation: z.string().min(6, "Au moins 6 caractères"),
 }).refine((data) => data.password === data.password_confirmation, {
-  message: "Passwords do not match",
+  message: "Les mots de passe ne correspondent pas",
   path: ["password_confirmation"],
 });
 
@@ -45,16 +45,16 @@ export default function ResetPassword() {
         password_confirmation: values.password_confirmation,
       });
       if (!res.ok) {
-        const msg = (res.data as any)?.message || "Reset failed";
+        const msg = (res.data as any)?.message || "Échec de la réinitialisation";
         setError(msg);
         toast({ variant: "destructive", title: "Erreur", description: msg });
         return;
       }
-      setStatus("Password reset. You can now log in.");
+      setStatus("Mot de passe réinitialisé. Vous pouvez maintenant vous connecter.");
       toast({ title: "Succès", description: "Mot de passe réinitialisé." });
       navigate("/login", { replace: true });
     } catch {
-      setError("Network error");
+      setError("Erreur réseau");
       toast({ variant: "destructive", title: "Erreur réseau", description: "Veuillez réessayer." });
     }
   };
@@ -63,7 +63,7 @@ export default function ResetPassword() {
     <AuthLayout>
       <Card>
         <CardHeader>
-          <CardTitle>Reset Password</CardTitle>
+          <CardTitle>Réinitialiser le mot de passe</CardTitle>
         </CardHeader>
         <CardContent>
           
@@ -74,7 +74,7 @@ export default function ResetPassword() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>E-mail</FormLabel>
                     <FormControl>
                       <Input type="email" {...field} />
                     </FormControl>
@@ -87,7 +87,7 @@ export default function ResetPassword() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Mot de passe</FormLabel>
                     <FormControl>
                       <Input type="password" {...field} />
                     </FormControl>
@@ -100,7 +100,7 @@ export default function ResetPassword() {
                 name="password_confirmation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
+                    <FormLabel>Confirmer le mot de passe</FormLabel>
                     <FormControl>
                       <Input type="password" {...field} />
                     </FormControl>
@@ -113,7 +113,7 @@ export default function ResetPassword() {
                   {form.formState.isSubmitting && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {form.formState.isSubmitting ? "Resetting..." : "Reset Password"}
+                  {form.formState.isSubmitting ? "Réinitialisation..." : "Réinitialiser le mot de passe"}
                 </Button>
               </div>
             </form>

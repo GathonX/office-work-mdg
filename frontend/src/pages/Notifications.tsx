@@ -72,21 +72,21 @@ export default function Notifications() {
           <div className="flex items-center gap-2">
             <Button variant="secondary" size="sm" onClick={refresh} disabled={loading}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {loading ? "Refreshing..." : "Refresh"}
+              {loading ? "Actualisation..." : "Actualiser"}
             </Button>
             <Button size="sm" onClick={markAllRead} disabled={markingAll || loading}>
               {markingAll && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Mark all as read
+              Tout marquer comme lu
             </Button>
           </div>
         </div>
         <Card>
           <CardHeader>
-            <CardTitle>Activity</CardTitle>
+            <CardTitle>Activité</CardTitle>
           </CardHeader>
           <CardContent>
             {items.length === 0 ? (
-              <p className="text-xs text-muted-foreground">No notifications yet.</p>
+              <p className="text-xs text-muted-foreground">Aucune notification pour le moment.</p>
             ) : (
               <div className="space-y-3">
                 {items.map((n) => {
@@ -108,10 +108,10 @@ export default function Notifications() {
                             disabled={markingIds.has(n.id)}
                           >
                             {markingIds.has(n.id) && <Loader2 className="mr-1 h-3 w-3 animate-spin" />}
-                            Mark read
+                            Marquer comme lu
                           </Button>
                         ) : (
-                          <span className="text-[10px] uppercase tracking-wide">Read</span>
+                          <span className="text-[10px] uppercase tracking-wide">Lu</span>
                         )}
                       </div>
                       <p className="font-medium text-sm">{title}</p>

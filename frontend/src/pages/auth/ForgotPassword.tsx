@@ -12,7 +12,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
 const schema = z.object({
-  email: z.string().email(),
+  email: z.string().email("E-mail invalide"),
 });
 
 type FormValues = z.infer<typeof schema>;
