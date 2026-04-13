@@ -1,0 +1,398 @@
+
+<style>
+:root {
+  --pn-dark: #2C2E43;
+  --pn-mid: #595260;
+  --pn-light: #B2B1B9;
+  --pn-yellow: #FFD523;
+  --pn-yellow-dim: #FFD52322;
+  --pn-yellow-border: #FFD52355;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans, sans-serif); }
+
+.pn-wrap { background: var(--pn-dark); border-radius: 16px; padding: 32px; color: #fff; }
+
+.pn-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.pn-logo-mark { width: 38px; height: 38px; background: var(--pn-yellow); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.pn-logo-mark svg { width: 22px; height: 22px; }
+.pn-logo-name { font-size: 22px; font-weight: 500; color: #fff; letter-spacing: -0.3px; }
+.pn-logo-sub { font-size: 12px; color: var(--pn-light); margin-top: 1px; }
+
+.pn-section { margin-bottom: 28px; }
+.pn-section-title {
+  font-size: 11px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--pn-yellow); margin-bottom: 14px; padding-bottom: 8px;
+  border-bottom: 1px solid #ffffff18;
+}
+
+.pn-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pn-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+.pn-card {
+  background: #ffffff0d; border: 1px solid #ffffff18; border-radius: 10px; padding: 14px 16px;
+}
+.pn-card-title { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 4px; }
+.pn-card-sub { font-size: 12px; color: var(--pn-light); line-height: 1.5; }
+
+.pn-pill {
+  display: inline-block; background: var(--pn-yellow-dim); border: 1px solid var(--pn-yellow-border);
+  color: var(--pn-yellow); font-size: 11px; font-weight: 500; padding: 3px 10px;
+  border-radius: 20px; margin: 3px 3px 3px 0;
+}
+
+.pn-phase {
+  background: #ffffff0d; border: 1px solid #ffffff18; border-radius: 10px;
+  padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 14px;
+}
+.pn-phase-num {
+  min-width: 32px; height: 32px; background: var(--pn-yellow); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500; color: var(--pn-dark); flex-shrink: 0;
+}
+.pn-phase-body { flex: 1; }
+.pn-phase-name { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 2px; }
+.pn-phase-dur { font-size: 11px; color: var(--pn-yellow); margin-bottom: 6px; }
+.pn-phase-tasks { font-size: 12px; color: var(--pn-light); line-height: 1.7; }
+.pn-phase-tasks span { display: block; padding-left: 12px; position: relative; }
+.pn-phase-tasks span::before { content: "–"; position: absolute; left: 0; color: var(--pn-mid); }
+
+.pn-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.pn-table th { text-align: left; color: var(--pn-light); font-weight: 500; padding: 6px 10px; border-bottom: 1px solid #ffffff18; }
+.pn-table td { padding: 8px 10px; border-bottom: 1px solid #ffffff0a; color: #fff; vertical-align: top; }
+.pn-table td:first-child { color: var(--pn-yellow); font-weight: 500; }
+.pn-table tr:last-child td { border-bottom: none; }
+
+.pn-badge { display: inline-block; border-radius: 6px; font-size: 11px; font-weight: 500; padding: 2px 8px; }
+.pn-badge.must { background: #FFD52322; color: var(--pn-yellow); border: 1px solid var(--pn-yellow-border); }
+.pn-badge.should { background: #ffffff0d; color: var(--pn-light); border: 1px solid #ffffff18; }
+.pn-badge.nice { background: #59526018; color: #B2B1B9; border: 1px solid #59526040; }
+
+.pn-divider { height: 1px; background: #ffffff14; margin: 0 0 24px; }
+
+.pn-stack { display: flex; flex-direction: column; gap: 8px; }
+.pn-row { display: flex; gap: 8px; }
+
+.pn-color-row { display: flex; gap: 10px; margin-top: 8px; }
+.pn-swatch { display: flex; align-items: center; gap: 8px; }
+.pn-swatch-box { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #ffffff22; flex-shrink: 0; }
+.pn-swatch-label { font-size: 11px; color: var(--pn-light); }
+.pn-swatch-hex { font-size: 11px; color: #ffffff66; font-family: var(--font-mono, monospace); }
+</style>
+
+<div class="pn-wrap">
+
+  <div class="pn-logo">
+    <div class="pn-logo-mark">
+      <svg viewBox="0 0 22 22" fill="none">
+        <rect x="2" y="6" width="18" height="12" rx="3" fill="#2C2E43"/>
+        <rect x="2" y="9" width="18" height="3" fill="#2C2E43"/>
+        <circle cx="6.5" cy="14" r="1.5" fill="#2C2E43"/>
+        <rect x="2" y="6" width="18" height="12" rx="3" stroke="#2C2E43" stroke-width="1"/>
+        <path d="M2 9h18" stroke="#2C2E43" stroke-width="2"/>
+      </svg>
+    </div>
+    <div>
+      <div class="pn-logo-name">PayNow</div>
+      <div class="pn-logo-sub">Cahier des charges &amp; plan de travail</div>
+    </div>
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">01 — Présentation du projet</div>
+    <div class="pn-grid-2">
+      <div class="pn-card">
+        <div class="pn-card-title">Vision</div>
+        <div class="pn-card-sub">PayNow est une passerelle de paiement (Payment Gateway) qui permet à tout développeur d'intégrer plusieurs méthodes de paiement via un bouton unique et une page de checkout hébergée.</div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Positionnement</div>
+        <div class="pn-card-sub">Comme Stripe ou PayPal mais orienté marché international avec support natif Mobile Money africain (MVola, Airtel, Orange) + cartes internationales.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">02 — Acteurs du système</div>
+    <div class="pn-grid-3">
+      <div class="pn-card">
+        <div class="pn-card-title">Marchand</div>
+        <div class="pn-card-sub">Développeur qui intègre PayNow dans son app via SDK + clé API</div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Client final</div>
+        <div class="pn-card-sub">Utilisateur de l'app marchand qui effectue le paiement sur la page PayNow</div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Admin PayNow</div>
+        <div class="pn-card-sub">Toi — gère les marchands, les providers, les commissions et les litiges</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">03 — Méthodes de paiement supportées</div>
+    <div>
+      <span class="pn-pill">Visa / Mastercard</span>
+      <span class="pn-pill">MVola (Telma)</span>
+      <span class="pn-pill">Airtel Money</span>
+      <span class="pn-pill">Orange Money</span>
+      <span class="pn-pill">PayPal</span>
+      <span class="pn-pill">Virement bancaire</span>
+      <span class="pn-pill">Crypto (phase 3)</span>
+    </div>
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">04 — Modules fonctionnels</div>
+    <table class="pn-table">
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Description</th>
+          <th>Priorité</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Auth marchands</td><td>Inscription, connexion, profil, clés API</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>Page checkout</td><td>Page de paiement hébergée sur PayNow</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>SDK JavaScript</td><td>Bouton + redirection pour apps web</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>Transactions</td><td>Historique, statuts, reçus PDF</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>Webhooks</td><td>Notification async au marchand</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>Dashboard marchand</td><td>Stats, solde, retraits</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>Intégration Stripe</td><td>Visa/Mastercard via Stripe</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>MVola API</td><td>Paiement mobile money Madagascar</td><td><span class="pn-badge must">Must have</span></td></tr>
+        <tr><td>Airtel / Orange API</td><td>Paiement mobile money Afrique</td><td><span class="pn-badge should">Should have</span></td></tr>
+        <tr><td>SDK PHP/Laravel</td><td>Package Composer pour apps Laravel</td><td><span class="pn-badge should">Should have</span></td></tr>
+        <tr><td>SDK Mobile</td><td>React Native / Flutter</td><td><span class="pn-badge nice">Nice to have</span></td></tr>
+        <tr><td>Crypto payments</td><td>USDT, USDC via Coinbase Commerce</td><td><span class="pn-badge nice">Nice to have</span></td></tr>
+        <tr><td>Admin panel</td><td>Gestion marchands, litiges, stats globales</td><td><span class="pn-badge should">Should have</span></td></tr>
+        <tr><td>Fraud detection</td><td>Limites, alertes, blocage IP</td><td><span class="pn-badge should">Should have</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">05 — Stack technique</div>
+    <div class="pn-grid-2">
+      <div class="pn-card">
+        <div class="pn-card-title">Frontend</div>
+        <div style="margin-top:8px;">
+          <span class="pn-pill">React.js</span>
+          <span class="pn-pill">TypeScript</span>
+          <span class="pn-pill">Tailwind CSS</span>
+          <span class="pn-pill">React Query</span>
+          <span class="pn-pill">Zustand</span>
+        </div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Backend</div>
+        <div style="margin-top:8px;">
+          <span class="pn-pill">Laravel 11</span>
+          <span class="pn-pill">MySQL</span>
+          <span class="pn-pill">Laravel Queues</span>
+          <span class="pn-pill">Laravel Sanctum</span>
+          <span class="pn-pill">Redis</span>
+        </div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Infrastructure</div>
+        <div style="margin-top:8px;">
+          <span class="pn-pill">HTTPS / SSL</span>
+          <span class="pn-pill">Webhooks</span>
+          <span class="pn-pill">Cron Jobs</span>
+          <span class="pn-pill">S3 / Storage</span>
+        </div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Providers externes</div>
+        <div style="margin-top:8px;">
+          <span class="pn-pill">Stripe API</span>
+          <span class="pn-pill">MVola API</span>
+          <span class="pn-pill">Airtel API</span>
+          <span class="pn-pill">Orange API</span>
+          <span class="pn-pill">PayPal SDK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">06 — Charte graphique</div>
+    <div class="pn-color-row" style="flex-wrap:wrap; gap:16px;">
+      <div class="pn-swatch">
+        <div class="pn-swatch-box" style="background:#2C2E43;"></div>
+        <div><div class="pn-swatch-label">Dark Navy</div><div class="pn-swatch-hex">#2C2E43</div></div>
+      </div>
+      <div class="pn-swatch">
+        <div class="pn-swatch-box" style="background:#595260;"></div>
+        <div><div class="pn-swatch-label">Mid Purple</div><div class="pn-swatch-hex">#595260</div></div>
+      </div>
+      <div class="pn-swatch">
+        <div class="pn-swatch-box" style="background:#B2B1B9;"></div>
+        <div><div class="pn-swatch-label">Light Gray</div><div class="pn-swatch-hex">#B2B1B9</div></div>
+      </div>
+      <div class="pn-swatch">
+        <div class="pn-swatch-box" style="background:#FFD523; border-color:#FFD52366;"></div>
+        <div><div class="pn-swatch-label">PayNow Yellow</div><div class="pn-swatch-hex">#FFD523</div></div>
+      </div>
+      <div class="pn-swatch">
+        <div class="pn-swatch-box" style="background:#ffffff;"></div>
+        <div><div class="pn-swatch-label">White</div><div class="pn-swatch-hex">#FFFFFF</div></div>
+      </div>
+    </div>
+    <div style="margin-top:12px; font-size:12px; color:var(--pn-light); line-height:1.7;">
+      Usage : fond principal = #2C2E43 · surfaces cards = #595260 · textes secondaires = #B2B1B9 · accents / CTA / highlights = #FFD523 · textes sur fond sombre = #FFFFFF
+    </div>
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">07 — Plan de travail — 8 phases</div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">1</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">Setup & fondations</div>
+        <div class="pn-phase-dur">Semaine 1</div>
+        <div class="pn-phase-tasks">
+          <span>Initialiser le projet Laravel + React + MySQL</span>
+          <span>Configurer Tailwind avec la palette PayNow</span>
+          <span>Créer les migrations : merchants, transactions, api_keys, webhooks</span>
+          <span>Mettre en place Laravel Sanctum pour l'auth</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">2</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">Auth marchands + Dashboard</div>
+        <div class="pn-phase-dur">Semaine 2</div>
+        <div class="pn-phase-tasks">
+          <span>Inscription / connexion marchand (React + API Laravel)</span>
+          <span>Génération et gestion des clés API</span>
+          <span>Dashboard marchand : stats basiques, profil</span>
+          <span>Layout général avec thème PayNow</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">3</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">Page checkout PayNow</div>
+        <div class="pn-phase-dur">Semaine 3</div>
+        <div class="pn-phase-tasks">
+          <span>Page checkout.paynow.com/pay/{token}</span>
+          <span>Formulaire de saisie des infos de paiement</span>
+          <span>Sélecteur de méthode (Carte, MVola, Airtel...)</span>
+          <span>Pages de succès / échec / pending</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">4</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">Intégration Stripe (cartes)</div>
+        <div class="pn-phase-dur">Semaine 4</div>
+        <div class="pn-phase-tasks">
+          <span>Créer le PaymentRouter Laravel</span>
+          <span>Intégrer Stripe PHP SDK</span>
+          <span>Gérer PaymentIntent, confirmation, remboursements</span>
+          <span>Tester le flux complet end-to-end</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">5</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">Système Webhooks + Transactions</div>
+        <div class="pn-phase-dur">Semaine 5</div>
+        <div class="pn-phase-tasks">
+          <span>Jobs Laravel pour l'envoi async des webhooks</span>
+          <span>Retry automatique en cas d'échec (3 tentatives)</span>
+          <span>Historique complet des transactions</span>
+          <span>Reçu PDF téléchargeable</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">6</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">SDK JavaScript (npm package)</div>
+        <div class="pn-phase-dur">Semaine 6</div>
+        <div class="pn-phase-tasks">
+          <span>Package npm paynow-js</span>
+          <span>Bouton PayNow avec redirection</span>
+          <span>Callback onSuccess / onError / onClose</span>
+          <span>Documentation et page de démo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">7</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">Mobile Money (MVola, Airtel, Orange)</div>
+        <div class="pn-phase-dur">Semaines 7–8</div>
+        <div class="pn-phase-tasks">
+          <span>Intégrer MVola API (Telma)</span>
+          <span>Intégrer Airtel Money API</span>
+          <span>Intégrer Orange Money API</span>
+          <span>Gestion des statuts async (polling + webhook)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pn-phase">
+      <div class="pn-phase-num">8</div>
+      <div class="pn-phase-body">
+        <div class="pn-phase-name">Admin panel + sécurité + déploiement</div>
+        <div class="pn-phase-dur">Semaines 9–10</div>
+        <div class="pn-phase-tasks">
+          <span>Panel admin : gestion marchands, litiges, stats globales</span>
+          <span>Détection fraude : limites, alertes, blacklist</span>
+          <span>Chiffrement des données sensibles (AES-256)</span>
+          <span>Déploiement production + monitoring</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pn-section">
+    <div class="pn-section-title">08 — Exigences de sécurité</div>
+    <div class="pn-grid-2">
+      <div class="pn-card">
+        <div class="pn-card-title">Obligatoires</div>
+        <div class="pn-card-sub">HTTPS sur toutes les routes · Clés API hashées (SHA-256) · Tokens de transaction signés (JWT) · Validation HMAC des webhooks · Rate limiting API · Chiffrement données bancaires</div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Recommandées</div>
+        <div class="pn-card-sub">2FA pour les marchands · Logs d'audit complets · IP whitelisting optionnel · Détection de doublons de transaction · Conformité PCI-DSS niveau 1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pn-section" style="margin-bottom:0;">
+    <div class="pn-section-title">09 — Critères de succès (MVP)</div>
+    <div class="pn-grid-3">
+      <div class="pn-card">
+        <div class="pn-card-title">Fonctionnel</div>
+        <div class="pn-card-sub">Un marchand peut s'inscrire, obtenir une clé API et recevoir un premier paiement réel en moins de 15 minutes</div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Performance</div>
+        <div class="pn-card-sub">Page checkout chargée en moins de 2s · Webhook envoyé en moins de 5s après confirmation</div>
+      </div>
+      <div class="pn-card">
+        <div class="pn-card-title">Fiabilité</div>
+        <div class="pn-card-sub">Zéro transaction perdue · Retry webhook automatique · Logs de toutes les erreurs provider</div>
+      </div>
+    </div>
+  </div>
+
+</div>
